@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Location And Photos</string>
+    <string name="camera">Camera</string>
+    <string name="location">CurrentLocation</string>
+    <string name="takephoto">Take A Photo</string>
+    <string name="homepag">Home</string>
+    <string name="google_maps_api_key">AIzaSyDORKbvJtIkbquSsv6i6VRUnstQwlGf5OI</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Welcome</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
