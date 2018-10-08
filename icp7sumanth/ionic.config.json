@@ -1,0 +1,7 @@
+{
+  "name": "icp7-firebase",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

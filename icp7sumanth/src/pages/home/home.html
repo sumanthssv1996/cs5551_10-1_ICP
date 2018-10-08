@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Camera</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <button ion-button full (click)="picture()">Camera App</button>
+    <button ion-button full (click)="logout()">Logout</button>
+    <img [src]="a" height="50px" width="50px" *ngFor="let a of dataAr"/>
+</ion-content>
