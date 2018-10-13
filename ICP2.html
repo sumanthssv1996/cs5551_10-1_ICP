@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="climateforecast">
+<head>
+    <meta t="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js" type="application/javascript"></script>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <style>
+        html,
+        body{
+            height: 100%;
+        }
+        body{
+            background-image: url("https://pre00.deviantart.net/4f79/th/pre/f/2014/010/c/2/gedc0006_corte_2_by_reizer_designer-d71ofpu.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .weatherModule {
+            text-align-all: center;
+            alignment: center;
+            max-width: 800px;
+            background-color: #cccccc;
+            margin: auto;
+            border: black;
+            padding: 10px;
+        }
+        .login, .details
+        {
+            text-align-all: center;
+            alignment: center;
+            max-width: 800px;
+            background-color: #cccccc;
+            font-size: 18px;
+            margin: auto;
+            border: black 10px;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        var app = angular.module('climateforecast', []);
+        app.controller('weatherController', function ($scope,$http) {
+            $scope.login = function (city1, state1) {
+                localStorage.setItem("city" , city1);
+                localStorage.setItem("state" , state1);
+                var city=localStorage.getItem("city");
+                var state=localStorage.getItem("state");
+                $http.get('https://api.wunderground.com/api/36b799dc821d5836/hourly/q/'+state+'/'+city+'.json').success(function(data) {
+                    console.log(data);
+                    $scope.Cal = data.hits[0].fields.nf_calories;
+                    $scope.Wgt = data.hits[0].fields.nf_serving_weight_grams;
+                    // $scope.currentweather= "dh"
+                })
+
+            };
+        });
+    </script>
+</head>
+<body>
+<div  ng-controller="weatherController">
+    <div class="jumbotron" style="max-width: 600px; alignment: center; text-align-all: center; margin: auto">
+        <h3 align="middle" style="color: black">Enter details:</h3>
+       <h6 align="middle"> CITY : <input ng-model="city"></input>
+        <br/><br/>
+        STATE: <input ng-model="state" ></input>
+        <br/><br/>
+        <input type="submit" ng-click="login(city, state)" value="GO"></input></h6>
+        <br/><br/>
+    </div>
+    <div class="container" style="max-width: 600px; alignment: center; text-align-all: center; margin: auto; background-color: #cccccc">
+        <li ng-repeat="x in tempArr" ng-if="$index<5">
+      Temperature at {{x.FCTTIME.pretty}}
+        is  {{x.temp.english}},condition is
+        {{x.condition}}
+        <img src={{x.icon_url}}><br>
+        </li></div>
+</div>
+</body>
+</html>

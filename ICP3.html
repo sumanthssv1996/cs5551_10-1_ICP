@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body  {
+            background-image: url("https://followtheintuition.com/wp-content/uploads/2017/04/healthy-eating-orthorexia-1200x675.jpg");
+            background-size: cover;
+        }
+    </style>
+</head>
+<body ng-app="calorieapp" ng-controller="caloriecontrol">
+<div class="jumbotron" style="max-width: 800px; alignment: left; text-align-all: center; margin: auto">
+    <h3 align="left" style="color: black; ">Give Food details</h3>
+    <h5 align="left">Food Item: <input type="text" ng-model="Item" placeholder="item name" >
+        <button  id="btn" ng-click="calapp()">Get Details</button>
+    </h5>
+</div>
+    <div class="container" style="max-width: 800px; alignment: center; text-align-all: center; margin: auto; background-color: #cccccc">
+            <p   ng-bind= "Cal"  ></p>
+            <p   ng-bind="TW" ></p>
+        <div align="left" id="TexttoSpeech"></div>
+        </div>
+<script>
+    angular.module('calorieapp', [])
+        .controller('caloriecontrol', function($scope, $http) {
+
+            $scope.calapp = function() {
+                console.log($scope.Item);
+                $http.get("https://api.nutritionix.com/v1_1/search/"+$scope.Item +"?results=0:1&fields=*&appId=4f7c0285&appKey=0d0b09a46b9667c538c9d0b5b9236a21").success(function(data)
+                {
+                    console.log(data);
+                    $scope.Cal = "Calories : " + data.hits[0].fields.nf_calories ;
+                    $scope.TW = "Serving Weight : " + data.hits[0].fields.nf_serving_weight_grams + " gm";
+                    var url = 'http://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?username=247712b8-c751-4174-8c44-52eaa8e9e82b&password=ERoNDIURwRrI&text='+$scope.Item;
+
+                    document.getElementById("TexttoSpeech").innerHTML= "<audio controls='' autoplay='' name='media'><source src='"+url+"' type='audio/ogg'></audio>";
+
+                })
+            }
+        });
+</script>
+</body>
+</html>
